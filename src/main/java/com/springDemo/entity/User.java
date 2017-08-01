@@ -1,10 +1,12 @@
 package com.springDemo.entity;
 
+import java.io.Serializable;
+
 /**
  * 基础用户类
  * Created by 浩瀚 on 2017/7/18.
  */
-public class User {
+public class User implements Serializable{
 
 	private Integer uid;
 	private String username;

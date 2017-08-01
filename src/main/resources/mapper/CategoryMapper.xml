@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.springDemo.dao.CategoryDao">
+
+   <resultMap id="category" type="com.springDemo.entity.Category">
+       <id column="cid" property="cid" />
+       <result column="cname" property="cname" />
+   </resultMap>
+
+    <resultMap id="secondcategory" type="com.springDemo.entity.SecondCategory">
+        <id column="csid" property="csid" />
+        <result column="csname" property="csname" />
+        <result column="cid" property="cid" />
+    </resultMap>
+
+    <sql id="categorytable">
+        category
+    </sql>
+
+    <sql id="categorysecond">
+        categorysecond
+    </sql>
+
+    <select id="getCategory" resultMap="category" parameterType="com.springDemo.entity.Category">
+      SELECT
+        cid
+        ,cname
+      FROM
+        <include refid="categorytable" />
+
+      <where>
+        <if test="cid != null and cid != ''">
+             cid = #{cid}
+        </if>
+        <if test="cname != null and cname != ''">
+            AND cname = #{cname}
+        </if>
+      </where>
+    </select>
+
+    <select id="getSecondCategory" resultMap="secondcategory">
+        SELECT
+          csid
+          ,csname
+          ,cid
+        FROM
+           <include refid="categorysecond" />
+        WHERE
+            1=1
+        <where>
+            <if test="cid != null and cid != ''">
+                AND cid = #{cid}
+            </if>
+            <if test="csid != null and csid != ''">
+                AND csid = #{csid}
+            </if>
+            <if test="csname != null and csname != ''">
+                AND csname = #{csname}
+            </if>
+        </where>
+    </select>
+
+</mapper>
